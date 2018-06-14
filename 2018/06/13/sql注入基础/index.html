@@ -5,16 +5,20 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018/5 | Caprix&#39;s blog</title>
+  <link rel="dns-prefetch" href="https://caprix-fei.github.io/mine">
+  <title>sql注入基础 | Caprix&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Caprix&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/archives/2018/05/index.html">
+  <meta name="description" content="#基础语句：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql注入基础">
+<meta property="og:url" content="https://caprix-fei.github.io/mine/2018/06/13/sql注入基础/index.html">
 <meta property="og:site_name" content="Caprix&#39;s blog">
+<meta property="og:description" content="#基础语句：">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-06-13T15:21:48.724Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Caprix&#39;s blog">
+<meta name="twitter:title" content="sql注入基础">
+<meta name="twitter:description" content="#基础语句：">
   
     <link rel="alternative" href="/atom.xml" title="Caprix&#39;s blog" type="application/atom+xml">
   
@@ -53,11 +57,9 @@
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="/">主页</a></li>
+				<li><a href="/mine">主页</a></li>
 	        
-				<li><a href="/web">web渗透</a></li>
-	        
-				<li><a href="/enviroment">环境搭建</a></li>
+				<li><a href="/">笔记</a></li>
 	        
 			</ul>
 		</nav>
@@ -115,8 +117,6 @@
 			
 				
 			
-				
-			
 			
 			
 			<nav class="header-nav">
@@ -134,14 +134,12 @@
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 70%">
+				<ul style="width: 50%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 50%"><a href="/mine">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/web">web渗透</a></li>
-		        
-					<li style="width: 33.333333333333336%"><a href="/enviroment">环境搭建</a></li>
+					<li style="width: 50%"><a href="/">笔记</a></li>
 		        
 				</ul>
 			</nav>
@@ -156,49 +154,149 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-sql注入基础" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/29/hello-hexo/" class="archive-article-date">
-  	<time datetime="2018-05-29T06:03:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-29</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/29/hello-hexo/">hello hexo</a>
+    <h1 class="article-title" itemprop="name">
+      sql注入基础
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2018/06/13/sql注入基础/" class="archive-article-date">
+  	<time datetime="2018-06-13T15:06:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#基础语句：</p>
+<a id="more"></a>
+<p>   注入判断：?id=1 and 1=1<br>            ?id=1 and 1=2<br>   列判断： ?id=1 order by 1<br>   试探：?id=1 union select 1,2#<br>   查本数据库名：?id=1 union select 1,database()#<br>   查表名：?id=1 or 1=1 union select table_name from information_schema_tables where table_schema=database()#<br>   查列名：?id=1 or 1=1 union select column_name from information_schema_columns where  table_schema=database()#<br>   查数据：?id=1 or 1=1 union select id from <strong><em>#<br>判断数据库类型：<br>   1、报错判断<br>   2、函数判断：<br>    mysql：<br>         id=1 and connection_id()<br>                  last_insert_id()<br>    常见asp搭载access和sql server ：<br>    IIS开启错误返回：<br>        id=1；and user&gt;0<br>        报错：将nvarchar值‘</em></strong>’转换int发生错误，得到数据库用户名<br>        sql server 超级权限用户 sa<br>        当前用户是sa ，则abo转int错误<br>    IIS未开启错误返回：<br>        access系统表：msysobjects ，web下读取无权限<br>        sql server 表sysobjects，web下可正常读取<br>    Access：asc(字符) SQLServer：unicode(字符)<br>    作用：返回某字符的ASCII码<br>    Access：chr(数字) SQLServer：nchar(数字)<br>    作用：与asc相反，根据ASCII码返回字符<br>    Access：mid(字符串,N,L) SQLServer：substring(字符串,N,L)<br>    作用：返回字符串从N个字符起长度为L的子字符串，即N到N+L之间的字符串<br>    Access：abc(数字) SQLServer：abc (数字)<br>    作用：返回数字的绝对值（在猜解汉字的时候会用到）<br>    Access：A between B And C SQLServer：A between B And C<br>    作用：判断A是否界于B与C之间<br>绕过waf：<br>    a) 大小写混合<br>    b)替换关键字<br>    c)使用编码<br>    d)使用注释<br>    e)等价函数与命令<br>    f)特殊符号<br>    g)HTTP参数控制<br>    h)缓冲区溢出<br>    i)整合绕过<br>宽字节注入：<br>    php开启Gpc，addslashes函数，或者icov等导致‘被加入反斜杠\<br>    %df\’= %df%5c%27=縗’</p>
+<p>#堆叠注入<br>   sql语句中加入；再跟一句sql语句<br>   局限性：<br>     可能由账户权限不足注入失败<br>     oracle数据库不支持堆叠注入，当两条sql语句同行时直接报错：无效字符</p>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://caprix-fei.github.io/mine/2018/06/13/sql注入基础/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
+
   
 
-    
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
 
 
           </div>
@@ -221,8 +319,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
